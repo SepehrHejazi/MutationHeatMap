@@ -18,5 +18,5 @@ hMaps = hm.conditionedHeatMapGenerator(path = input, condition= condition, kinds
 for kind in kinds:
     hMaps[kind] = hMaps[kind]/np.linalg.norm(hMaps[kind])
 #####################################################################################
-print(time.time()-start)
+print("runtimetime:",time.time()-start)
 hm.CSVGenerator(hMaps,"heatMap.csv",kinds) 
