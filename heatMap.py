@@ -48,7 +48,11 @@ def heatMapGenerator(kinds, row,lengthLimit):
 def conditionedHeatMapGenerator(path,condition = 700,lengthLimit = REFRENCE_LENGTH,kinds= ['X','I','D']):
     hMaps = {kind: [0 for _ in range(lengthLimit)] for kind in kinds}
     rows = reader(path)
+    x= 0
     for row in rows:
+        x += 1
+        if(x%1000==0):
+            print("progress: " + str(int(x/len(rows)*100))+'%')
         hMap = heatMapGenerator(kinds = kinds+['='], row = row ,lengthLimit = lengthLimit)
         if sum(hMap['=']) + sum(hMap['X']) > condition:
             for kind in kinds:

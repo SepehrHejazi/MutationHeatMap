@@ -1,5 +1,6 @@
 import heatMap as hm
 import numpy as np
+import time
 hm.REFRENCE_LENGTH = 999
 
 ###CSV file inputed to this function has the following properties:
@@ -10,11 +11,12 @@ condition = 700 ## '=' + 'X' < condition will be discarded
 lengthLimit = hm.REFRENCE_LENGTH ### by increasing you will get zero padding at the end of the heatMap
 kinds= ['X','I','D'] #### list of Kind
 
+start = time.time()
 hMaps = hm.conditionedHeatMapGenerator(path = input, condition= condition, kinds= kinds)
 
 ####################### normalizing the heatMap #####################################
 for kind in kinds:
     hMaps[kind] = hMaps[kind]/np.linalg.norm(hMaps[kind])
 #####################################################################################
-
+print(time.time()-start)
 hm.CSVGenerator(hMaps,"heatMap.csv",kinds) 
