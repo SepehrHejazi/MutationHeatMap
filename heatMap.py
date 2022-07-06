@@ -15,13 +15,12 @@ def reader(file):
 
 
 
-def cigarParser(cigar, kind,start,lengthLimit):
+def cigarToHeatMap(cigar, kind,start,lengthLimit):
     start = int(start)
     matches = re.findall(r"([0-9]+)([A-G,I-R, T-Z,=]+)", cigar)
     # matches is a list of tuple and each tuple is like ('22','D')#
     
     output = [0 for _ in range(lengthLimit)]
-    
     for match in matches:
         if match[1] == kind:
             for k in range(int(match[0])):
@@ -30,22 +29,14 @@ def cigarParser(cigar, kind,start,lengthLimit):
                 except:
                     break
         start+= int(match[0])
-        # for k in range(int(match[0])): # for k in range(22):
-        #     if match[1] == kind:            # if 'D' == kind:
-        #         output.append(1)
-        #     else:
-        #         output.append(0)
     return output
-# print(cigarParser(cigar,'D',0,100))
+
 
 def heatMapGenerator(kinds, row,lengthLimit):
-    ## checking the condition:
     hMap = {kind: None for kind in kinds}
     for kind in kinds:
-        hMap[kind] = cigarParser(cigar = row[8], kind = kind, start = row[3],lengthLimit=lengthLimit)
+        hMap[kind] = cigarToHeatMap(cigar = row[8], kind = kind, start = row[3],lengthLimit=lengthLimit)
         hMap[kind] = hMap[kind]
-        # if len(hMap[kind]) < lengthLimit:
-        #     hMap[kind] += [0 for _ in range(lengthLimit-len(hMap[kind]))]
     return hMap
 
 def conditionedHeatMapGenerator(path,condition = 700,lengthLimit = REFRENCE_LENGTH,kinds= ['X','I','D']):
@@ -53,14 +44,17 @@ def conditionedHeatMapGenerator(path,condition = 700,lengthLimit = REFRENCE_LENG
     rows = reader(path)
     x= 0
     for row in rows:
+        #progress keeper
         x += 1
         if(x%1000==0):
             print("progress: " + str(int(x/len(rows)*100))+'%')
+        #creat a dic of heatmaps for each kind
         hMap = heatMapGenerator(kinds = kinds+['='], row = row ,lengthLimit = lengthLimit)
         if sum(hMap['=']) + sum(hMap['X']) > condition:
             for kind in kinds:
                 hMaps[kind] = np.add(hMaps[kind], hMap[kind])
     return hMaps
+
 def CSVGenerator(dict,output_name,kinds):
     output = open(output_name,"w+",newline="")
     writer = csv.writer(output)
