@@ -26,16 +26,18 @@ hm.CSVGenerator(hMaps,"heatMap.csv",kinds)
 
 
 
+#####################test cases!
+# file= 'bamToDf.csv'
+# print(hm.reader(file)[943])
 
-file= 'bamToDf.csv'
-print(hm.reader(file)[943])
+# cigar = '1S2D3=1D2I1S'
+# print(hm.cigarToHeatMap(cigar,'D',0,25))
 
-cigar = '1S2D3=1D2I1S'
-print(hm.cigarToHeatMap(cigar,'D',0,25))
+# row = [0 for _ in range(9)]
+# row[3] = 0
+# row[8] = cigar
+# kinds = ['X','I','D']
+# print(hm.heatMapGenerator(kinds, row,5))
 
-row = [0 for _ in range(9)]
-row[3] = 0
-row[8] = cigar
-kinds = ['X','I','D']
-print(hm.heatMapGenerator(kinds, row,5))
+# print(hm.conditionedHeatMapGenerator(file,condition = 0,lengthLimit=10))
 
