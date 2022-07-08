@@ -15,15 +15,15 @@ def getCSVInputs(workingDirectory = None):
     for file in files:
         if file.endswith('.csv'):
             CSVInputs.append(file)
-    X= input(str(CSVInputs)+"\nDoes this look good? \nPress any button to continue!\n OR choose the Indexes seperated by commo to continue!")
+    X= input(str(CSVInputs)+"\nDoes this look good? \nPress any button to continue!\n OR choose the Indexes seperated by commo to continue!\n")
     if X == '':
         return CSVInputs
     else:
         CSVInputsMod = []
         for x in X.split(','):
             CSVInputsMod.append(CSVInputs[int(x)])
-            input(str(CSVInputs)+"\nDoes this look good? \nPress any button to continue!")
-            return CSVInputsMod
+        input(str(CSVInputsMod)+"\nDoes this look good? \nPress any button to continue!\n")
+        return CSVInputsMod
 
 ###CSV file inputed to this function has the following properties:
 #  4th column should be start;
