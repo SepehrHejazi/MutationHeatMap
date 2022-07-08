@@ -1,4 +1,5 @@
 from importlib.resources import path
+from posixpath import split
 import heatMap as hm
 import numpy as np
 import time ,os
@@ -14,8 +15,16 @@ def getCSVInputs(workingDirectory = None):
     for file in files:
         if file.endswith('.csv'):
             CSVInputs.append(file)
-    input(str(CSVInputs)+"Does this look good? Press any button to continue!")
-    return CSVInputs 
+    X= input(str(CSVInputs)+"\nDoes this look good? \nPress any button to continue!\n OR choose the Indexes seperated by commo to continue!")
+    if X == '':
+        return CSVInputs
+    else:
+        CSVInputsMod = []
+        for x in X.split(','):
+            CSVInputsMod.append(CSVInputs[int(x)])
+            input(str(CSVInputs)+"\nDoes this look good? \nPress any button to continue!")
+            return CSVInputsMod
+
 ###CSV file inputed to this function has the following properties:
 #  4th column should be start;
 #  9th column should be Cigar ###
@@ -39,6 +48,10 @@ def heatMapGeneration(path):
     #####################################################################################
     print("run time:",time.time()-start)
     hm.CSVGenerator(hMaps,"heatMap"+path,kinds) 
+    return hMaps
+
+
+
 
 
 CSVInputs = getCSVInputs()
@@ -47,6 +60,14 @@ for csv in CSVInputs:
     print("Generating heatmap for "+ csv +". \nStep "+str(cnt)+" out of "+str(len(CSVInputs)))
     heatMapGeneration(csv)
     cnt +=1
+
+
+
+
+
+
+
+
 
 #####################test cases!
 # file= 'bamToDf.csv'
