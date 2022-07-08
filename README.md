@@ -16,9 +16,10 @@ output -> ['943', '48ece448-3179-4b65-af7d-bbd0be085fbb', 'referenceSequence_LET
 cigar = '1S2D3=1D2I1S'  # row[8]
 kind  = 'D'  
 start = 0               # int(row[3])
-lengthLimit = 25        # This is the limit if cigar lengths are not the same, very big length limit will 
-                          create zero adding at the end
 
+
+######## This is the limit if cigar lengths are not the same, very big length limit will create zero padding at the end
+lengthLimit = 25 
 cigarParser(cigar, kind,start,lengthLimit)
 output -> [1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
